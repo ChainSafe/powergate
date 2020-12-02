@@ -43,9 +43,9 @@ func main() {
 	}
 
 	// Configure logging.
-	if err := setupLogging(conf.RepoPath); err != nil {
-		log.Fatalf("configuring up logging: %s", err)
-	}
+	//if err := setupLogging(conf.RepoPath); err != nil {
+	//	log.Fatalf("configuring up logging: %s", err)
+	//}
 
 	log.Infof("starting powd:\n%s", buildinfo.Summary())
 
