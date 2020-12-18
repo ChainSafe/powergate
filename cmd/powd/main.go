@@ -222,15 +222,17 @@ func setupInstrumentation() (func(), error) {
 }
 
 func setupLogging(repoPath string) error {
-	if err := os.MkdirAll(repoPath, os.ModePerm); err != nil {
-		return fmt.Errorf("creating repo folder: %s", err)
+	if len(os.Getenv("GOLOG_LOG_FMT")) == 0 {
+		if err := os.MkdirAll(repoPath, os.ModePerm); err != nil {
+			return fmt.Errorf("creating repo folder: %s", err)
+		}
+		cfg := logging.Config{
+			Level:  logging.LevelError,
+			Stdout: true,
+			File:   filepath.Join(repoPath, "powd.log"),
+		}
+		logging.SetupLogging(cfg)
 	}
-	cfg := logging.Config{
-		Level:  logging.LevelError,
-		Stdout: true,
-		File:   filepath.Join(repoPath, "powd.log"),
-	}
-	logging.SetupLogging(cfg)
 	loggers := []string{
 		// Top-level
 		"powd",
